@@ -175,6 +175,10 @@ footer{margin-top:20px;position:relative}
 }
 </style>
 
+<script>
+/* se as imagens estiverem na raiz do repositório (sem a pasta img/), tenta de novo sem o prefixo */
+document.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&!t.dataset.fb&&t.src.indexOf('/img/')>-1){t.dataset.fb='1';t.src=t.src.replace('/img/','/');}},true);
+</script>
 <div class="brandstrip" aria-hidden="true"><i></i><i></i></div>
 <header class="top">
   <div class="wrap">
