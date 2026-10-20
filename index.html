@@ -1,0 +1,409 @@
+<title>Espaço Coral · Mundial Viçosa</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@300;400;500;600;700;800&display=swap">
+<style>
+/* Layout: cabeçalho de marca + abas (Planta · Passeio · Galeria); planta 1:100 com marcadores e ficha lateral; rodapé = papel timbrado.
+   Tema único claro por decisão: segue as pranchas impressas e a identidade Cláudio Pupo Arquiteto. */
+:root{
+  --paper:#FFFFFF; --soft:#F3F5F6; --ink:#22252B; --muted:#5D6168; --line:#DDE1E4;
+  --teal:#4CBABF; --teal-ink:#2C8C91; --gray:#A6A6A6; --navy:#21306B; --mund:#003F7F;
+  --stage:#0E1020;
+  --display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Montserrat","Segoe UI",Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
+.wrap{max-width:1360px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+img{max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+/* faixa de marca (barra lateral do timbrado, deitada) */
+.brandstrip{height:6px;display:flex}
+.brandstrip i{display:block;height:100%}
+.brandstrip i:first-child{flex:0 0 18%;background:var(--teal)}
+.brandstrip i:last-child{flex:1;background:var(--gray)}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+.hrow{display:flex;align-items:center;gap:20px;padding-block:14px;flex-wrap:wrap}
+.hrow .cp{height:44px;width:auto}
+.title{display:flex;align-items:flex-end;gap:10px;margin-right:auto;min-width:0}
+.title span{font-family:var(--display);font-style:italic;font-size:30px;line-height:.9;font-weight:500}
+.title img{height:46px;width:auto}
+.client{display:flex;align-items:center;gap:12px}
+.client img{height:34px;width:auto}
+.client b{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mund);border-left:2px solid var(--mund);padding-left:10px;line-height:1.15;font-weight:800}
+nav.tabs{display:flex;gap:4px;padding-bottom:10px;overflow-x:auto}
+nav.tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:8px 14px 9px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--navy);border-color:var(--teal)}
+nav.tabs button:hover{color:var(--navy)}
+
+main{padding-block:28px 40px}
+.kicker{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--teal-ink);font-weight:700;margin:0 0 6px}
+h1,h2{margin:0;text-wrap:balance}
+h1{font-size:26px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--navy);line-height:1.1}
+h1 em{font-family:var(--display);text-transform:none;letter-spacing:0;font-weight:500;color:var(--ink);font-size:30px}
+.lead{color:var(--muted);max-width:68ch;margin:8px 0 22px}
+
+/* ---------- PLANTA ---------- */
+.plangrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+.plangrid>div{min-width:0}
+.scalebar span{min-width:0}
+.planscroll{overflow-x:auto;border:1px solid var(--line);background:#fff}
+.plan{position:relative;min-width:760px}
+.plan img{display:block;width:100%;height:auto}
+.hs{position:absolute;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;border:2px solid #fff;
+  background:var(--navy);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.28);transition:transform .18s ease,background .18s}
+.hs.sup{background:var(--teal-ink)}
+.hs:hover{transform:translate(-50%,-50%) scale(1.15)}
+.hs[aria-pressed="true"]{background:var(--teal);transform:translate(-50%,-50%) scale(1.25)}
+.hs[aria-pressed="true"]::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid var(--teal);animation:ping 1.6s ease-out infinite}
+@keyframes ping{from{opacity:.9;transform:scale(.8)}to{opacity:0;transform:scale(1.6)}}
+.scalebar{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--muted);margin-top:10px;letter-spacing:.06em}
+.scalebar .b{display:flex;height:6px;border:1px solid var(--ink)}
+.scalebar .b i{width:18px}.scalebar .b i:nth-child(odd){background:var(--ink)}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.legend button{display:flex;align-items:center;gap:8px;background:var(--soft);border:1px solid transparent;border-radius:999px;padding:5px 12px 5px 5px;font-size:12.5px;font-weight:600}
+.legend button b{width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center}
+.legend button.sup b{background:var(--teal-ink)}
+.legend button[aria-pressed="true"]{border-color:var(--teal);background:#fff}
+
+aside.ficha{position:sticky;top:150px;border:1px solid var(--line);background:#fff;min-width:0}
+.ficha .fh{display:flex;gap:12px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
+.ficha .fh .n{font-family:var(--display);font-size:44px;line-height:.8;color:var(--teal);font-weight:600;font-variant-numeric:tabular-nums}
+.ficha .fh h2{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);font-weight:800}
+.ficha .fh small{display:block;color:var(--muted);font-size:12px;font-weight:500;letter-spacing:0;text-transform:none}
+.ficha .obj{background:var(--soft);display:flex;align-items:center;justify-content:center;height:220px;padding:14px}
+.ficha .obj img{max-height:100%;width:auto;mix-blend-mode:multiply}
+.ficha .body{padding:16px 18px}
+.ficha p{margin:0 0 12px;font-size:13.5px;color:#3a3d43}
+.ficha .thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
+.ficha .thumbs button{border:0;padding:0;background:var(--soft);aspect-ratio:4/3;overflow:hidden}
+.ficha .thumbs img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.ficha .thumbs button:hover img{transform:scale(1.06)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:0;padding:10px 16px;font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.btn:hover{background:var(--mund)}
+.btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+.nores{font-size:12.5px;color:var(--muted);font-style:italic}
+
+/* ---------- PASSEIO ---------- */
+.stage{position:relative;background:var(--stage);aspect-ratio:16/9;max-height:76vh;width:100%;overflow:hidden;color:#fff}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+.slide.on{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:var(--ox,50%) var(--oy,50%)}
+.slide.on img{animation:kb var(--dur,7s) ease-out forwards}
+@keyframes kb{from{transform:scale(var(--s0,1.0)) translate(var(--x0,0),var(--y0,0))}to{transform:scale(var(--s1,1.12)) translate(var(--x1,0),var(--y1,0))}}
+.stage .shade{position:absolute;inset:auto 0 0 0;height:42%;background:linear-gradient(transparent,rgba(8,10,24,.78));pointer-events:none}
+.stage .cap{position:absolute;left:clamp(16px,3vw,40px);bottom:clamp(18px,4vw,44px);right:120px;pointer-events:none}
+.stage .cap .num{font-family:var(--display);font-size:clamp(34px,5vw,64px);line-height:.8;color:var(--teal);font-weight:600}
+.stage .cap h3{margin:6px 0 2px;font-size:clamp(14px,1.7vw,22px);letter-spacing:.14em;text-transform:uppercase;font-weight:800}
+.stage .cap p{margin:0;font-family:var(--display);font-style:italic;font-size:clamp(15px,1.7vw,22px);opacity:.92}
+.stage .cap .num,.stage .cap h3,.stage .cap p{animation:rise .9s ease both}
+.stage .cap h3{animation-delay:.12s}.stage .cap p{animation-delay:.24s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.stage .logo{position:absolute;top:clamp(12px,2vw,24px);right:clamp(12px,2vw,24px);height:clamp(30px,4vw,52px);width:auto;filter:drop-shadow(0 1px 6px rgba(0,0,0,.35))}
+.ctrl{position:absolute;right:clamp(12px,2vw,24px);bottom:clamp(14px,3vw,36px);display:flex;gap:6px}
+.ctrl button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(10,12,30,.45);color:#fff;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.ctrl button:hover{background:var(--teal);border-color:var(--teal)}
+.ctrl svg{width:16px;height:16px;fill:currentColor}
+.prog{position:absolute;left:0;right:0;top:0;display:flex;gap:3px;padding:8px}
+.prog i{flex:1;height:3px;background:rgba(255,255,255,.28);overflow:hidden;border-radius:2px}
+.prog i b{display:block;height:100%;width:0;background:#fff}
+.prog i.done b{width:100%}
+.prog i.cur b{animation:fill var(--dur,7s) linear forwards}
+.paused .prog i.cur b{animation-play-state:paused}
+.paused .slide.on img{animation-play-state:paused}
+@keyframes fill{to{width:100%}}
+.strip{display:flex;gap:6px;overflow-x:auto;margin-top:10px;padding-bottom:6px}
+.strip button{flex:0 0 112px;aspect-ratio:16/10;border:2px solid transparent;padding:0;background:var(--soft);overflow:hidden}
+.strip button[aria-current="true"]{border-color:var(--teal)}
+.strip img{width:100%;height:100%;object-fit:cover;display:block}
+.stage:fullscreen{max-height:none;aspect-ratio:auto;height:100%}
+
+/* ---------- GALERIA ---------- */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.gal button{position:relative;border:0;padding:0;background:var(--soft);aspect-ratio:3/2;overflow:hidden;text-align:left}
+.gal button img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.gal button:hover img{transform:scale(1.05)}
+.gal button span{position:absolute;left:0;bottom:0;background:rgba(255,255,255,.94);padding:6px 10px;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy)}
+.gal.obj button{aspect-ratio:1;background:#fff;border:1px solid var(--line)}
+.gal.obj button img{object-fit:contain;padding:18px;mix-blend-mode:multiply}
+h2.sec{font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--teal-ink);font-weight:700;margin:30px 0 12px}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:50;background:rgba(10,12,26,.94);display:flex;align-items:center;justify-content:center;
+  padding:calc(env(safe-area-inset-top,0px) + 56px) max(16px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 64px) max(16px,env(safe-area-inset-left,0px))}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;background:#fff}
+.lb .lbcap{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);text-align:center;color:#fff;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+.lb .x,.lb .pv,.lb .nx{position:absolute;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.35);color:#fff;width:44px;height:44px;border-radius:50%;font-size:20px;line-height:1}
+.lb .x{top:calc(env(safe-area-inset-top,0px) + 10px);right:max(12px,env(safe-area-inset-right,0px))}
+.lb .pv{left:max(12px,env(safe-area-inset-left,0px));top:50%}
+.lb .nx{right:max(12px,env(safe-area-inset-right,0px));top:50%}
+
+/* rodapé = papel timbrado */
+footer{margin-top:20px;position:relative}
+.fband{display:flex;min-height:72px}
+.fband .g{flex:1 1 55%;background:var(--gray);color:#fff;display:flex;align-items:center;gap:16px;padding-block:12px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:16px;flex-wrap:wrap}
+.fband .t{flex:1 1 45%;background:var(--teal);color:#fff;display:flex;align-items:center;padding-block:12px;
+  padding-right:max(16px,env(safe-area-inset-right,0px));padding-left:16px;font-size:12px;line-height:1.5;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+.fband .g img{height:58px;width:58px;border-radius:50%;background:#fff;margin-top:-26px;box-shadow:0 0 0 3px #fff}
+.fband .g div{font-size:12px;line-height:1.5}
+.fband strong{font-weight:700;display:block}
+.pix{display:block;width:100%;height:28px}
+@media (max-width:980px){
+  .plangrid{grid-template-columns:1fr}
+  aside.ficha{position:static}
+}
+@media (max-width:620px){
+  .hrow .cp{height:36px}.title img{height:36px}.title span{font-size:24px}
+  .client{width:100%}
+  h1{font-size:20px}h1 em{font-size:24px}
+  .stage{aspect-ratio:4/5}
+  .stage .cap{right:16px;bottom:72px}
+  .fband{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){
+  .slide.on img,.stage .cap *,.hs[aria-pressed="true"]::after{animation:none!important}
+  .slide{transition:none}
+}
+</style>
+
+<div class="brandstrip" aria-hidden="true"><i></i><i></i></div>
+<header class="top">
+  <div class="wrap">
+    <div class="hrow">
+      <img class="cp" src="img/cp.png" alt="Cláudio Pupo Arquiteto">
+      <div class="title"><span>Espaço</span><img src="img/coral.png" alt="Coral"></div>
+      <div class="client"><img src="img/mundial.png" alt="Mundial Acabamentos"><b>Loja<br>Viçosa</b></div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" id="t-planta" aria-selected="true" data-v="planta">Planta interativa</button>
+      <button role="tab" id="t-passeio" aria-selected="false" data-v="passeio">Passeio</button>
+      <button role="tab" id="t-galeria" aria-selected="false" data-v="galeria">Galeria</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- PLANTA -->
+  <section id="v-planta" role="tabpanel" aria-labelledby="t-planta">
+    <p class="kicker">Projeto de layout · reforma de loja de tintas</p>
+    <h1>Planta de layout <em>· clique nos números</em></h1>
+    <p class="lead">Cada marcador abre a ficha do elemento, com o modelo isolado e as perspectivas em que ele aparece.</p>
+    <div class="plangrid">
+      <div>
+        <div class="planscroll"><div class="plan" id="plan"><img src="img/planta.png" alt="Planta de layout do salão de vendas, escala 1:100"></div></div>
+        <div class="scalebar"><div class="b"><i></i><i></i><i></i><i></i><i></i></div><span>Planta original em escala 1:100 (prancha A3) · nesta tela, sem escala</span></div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <aside class="ficha" id="ficha" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <!-- PASSEIO -->
+  <section id="v-passeio" role="tabpanel" aria-labelledby="t-passeio" hidden>
+    <p class="kicker">Percurso pelo salão</p>
+    <h1>Passeio <em>· do acesso à galeria de cor</em></h1>
+    <p class="lead">Roda sozinho. Use as setas do teclado ou os botões para navegar e o botão de tela cheia para apresentar na TV.</p>
+    <div class="stage" id="stage" tabindex="0" aria-roledescription="carrossel">
+      <div class="prog" id="prog"></div>
+      <img class="logo" src="img/coral.png" alt="">
+      <div class="shade"></div>
+      <div class="cap" id="cap"></div>
+      <div class="ctrl">
+        <button id="b-prev" aria-label="Anterior"><svg viewBox="0 0 24 24"><path d="M15.4 5.4 14 4l-8 8 8 8 1.4-1.4L8.8 12z"/></svg></button>
+        <button id="b-play" aria-label="Pausar"><svg viewBox="0 0 24 24" id="i-play"><path d="M7 5h4v14H7zm6 0h4v14h-4z"/></svg></button>
+        <button id="b-next" aria-label="Próxima"><svg viewBox="0 0 24 24"><path d="m8.6 18.6 1.4 1.4 8-8-8-8-1.4 1.4 6.6 6.6z"/></svg></button>
+        <button id="b-fs" aria-label="Tela cheia"><svg viewBox="0 0 24 24"><path d="M5 5h5v2H7v3H5zm9 0h5v5h-2V7h-3zM5 14h2v3h3v2H5zm12 0h2v5h-5v-2h3z"/></svg></button>
+      </div>
+    </div>
+    <div class="strip" id="strip"></div>
+  </section>
+
+  <!-- GALERIA -->
+  <section id="v-galeria" role="tabpanel" aria-labelledby="t-galeria" hidden>
+    <p class="kicker">Imagens do projeto</p>
+    <h1>Galeria</h1>
+    <h2 class="sec">Ambientes</h2>
+    <div class="gal" id="gal-amb"></div>
+    <h2 class="sec">Expositores e mobiliário</h2>
+    <div class="gal obj" id="gal-obj"></div>
+  </section>
+</main>
+
+<footer>
+  <svg class="pix" id="pix" preserveAspectRatio="xMinYMax meet" aria-hidden="true"></svg>
+  <div class="fband">
+    <div class="g"><img src="img/cpc.png" alt=""><div><strong>Arq. Urb. Cláudio Oliveira Pupo Filho · CAU A30214-7</strong>Rua Dr. Milton Bandeira, 111 · Sala 712 · Vereda do Bosque · Viçosa-MG</div></div>
+    <div class="t"><div><strong>Espaço Coral · Mundial Acabamentos – Loja Viçosa</strong>Projeto de layout · Versão 02 · Out/2026 · (31) 99245-1571 · claudiopupo.com.br</div></div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada">
+  <img id="lb-img" alt="">
+  <div class="lbcap" id="lb-cap"></div>
+  <button class="x" id="lb-x" aria-label="Fechar">×</button>
+  <button class="pv" id="lb-p" aria-label="Anterior">‹</button>
+  <button class="nx" id="lb-n" aria-label="Próxima">›</button>
+</div>
+
+<script>
+const R = {
+  '180123':'Vista aérea do salão','180106':'Vista aérea · layout completo','175527':'Parede institucional e mesas',
+  '175553':'Salão de vendas','175614':'Lounge e atendimento','175724':'Painel Cores','175708':'Expositor Mactra',
+  '175745':'Mactra · detalhe','175448':'Galeria de expositores','175806':'Arco-Íris','175829':'Luz & Cor',
+  '175651':'Banco Coralit','175943':'Banco Coralit e Mactra','175635':'Mesas de atendimento','175845':'Painel Efeitos',
+  '175911':'Expositor Verniz','175509':'Circulação lateral'
+};
+const ITEMS = [
+ {n:1,x:3.56,y:24.43,t:'Painel Cores',s:'cores variadas + lounge',obj:1,img:['175724','175614'],d:'Painel azul com peças de cor sobrepostas e a marca Coral ao centro. Na frente, mesa redonda com duas cadeiras para a conversa inicial com o cliente.'},
+ {n:2,x:13.49,y:14.21,t:'Expositor Mactra',s:'da fundação ao acabamento',obj:2,img:['175708','175745','175943'],d:'Fundo em tijolinho, testeira azul com marca e fita de LED, bancada com amostras de textura e painel do portfólio Mactra com QR code.'},
+ {n:3,x:19.68,y:14.5,t:'Arco-Íris',s:'pórtico da Cor do Ano',obj:3,img:['175806','175448','175651'],d:'Pórtico em molduras sobrepostas (azul, rosa, laranja e amarelo) emoldurando a marca. É o ponto focal da parede de fundo e o cenário para fotos.'},
+ {n:4,x:25.99,y:14.5,t:'Painel Luz & Cor',s:'nichos iluminados',obj:4,img:['175829','175448'],d:'Painel azul com quatro nichos de cor em formato de exclamação e testeira com marca. Apresenta cartelas e tendências.'},
+ {n:5,x:38.49,y:15.67,t:'Painel Efeitos',s:'amostras de grande formato',obj:5,img:['175845','175509'],d:'Estrutura metálica com painéis deslizantes de grande formato, para mostrar efeitos e texturas em escala real.'},
+ {n:6,x:48.41,y:38.16,t:'Gôndolas',s:'e prateleiras de estoque',obj:0,img:['175509','175635'],d:'Duas linhas de gôndolas com cabeceiras no eixo do salão, mais as prateleiras de estoque junto ao depósito. É a área de autoatendimento de volume.'},
+ {n:7,x:21.21,y:47.36,t:'Mesas de atendimento',s:'4 postos com notebook',obj:7,img:['175635','175527','175614'],d:'Tampo branco em "U" com painel frontal da marca e cadeiras verde-água. Os postos ficam junto aos pilares para liberar a circulação.'},
+ {n:8,x:16.18,y:29.69,t:'Banco Coralit',s:'banco-mostruário (3 un.)',obj:8,img:['175651','175943'],d:'Réguas coloridas sobre base preta. Funciona como assento de espera e como mostruário de cores.'},
+ {n:9,x:28.07,y:59.48,t:'Expositor Verniz',s:'esmaltes, vernizes e protetores',obj:9,img:['175911','175553'],d:'Blocos escalonados em laranja, vermelho, bege e amarelo, com totem azul de sinalização.'},
+ {n:10,x:12.38,y:41.81,t:'Expositores de pilar',s:'ilhas de produto',obj:10,img:['175553','175527'],d:'Pórticos azuis apoiados nos pilares, com latas empilhadas. Transformam a estrutura existente em ponto de venda.'},
+ {n:11,x:6.99,y:67.07,t:'Caixa',s:'junto ao acesso',obj:0,img:['180106'],d:'Balcão de caixa próximo ao acesso, com controle visual da entrada e do salão.'},
+ {n:12,x:59.07,y:80.22,t:'Área de preparo',s:'de tintas',obj:0,img:[],sup:1,d:'Ambiente de apoio para preparo de tintas, fora do salão de vendas.'},
+ {n:13,x:72.98,y:46.63,t:'Administrativo e copa',s:'escada de acesso ao 2º pav.',obj:0,img:[],sup:1,d:'Bloco de salas administrativas e copa, com a escada para o segundo pavimento.'},
+ {n:14,x:24.58,y:74.67,t:'Parede institucional',s:'marca Mundial',obj:0,img:['175527','175553'],d:'Parede azul com a marca Mundial Acabamentos em letras-caixa e jardineiras.'},
+ {n:15,x:4.05,y:55.68,t:'Acesso',s:'à loja',obj:0,img:['180106','180123'],sup:1,d:'Entrada pela fachada, com visão direta do eixo de mesas e da galeria de expositores ao fundo.'}
+];
+// percurso (ordem narrativa) com Ken Burns individual
+const TOUR = [
+ ['180123',null,'Uma vitrine de cor','vista aérea do salão',{s0:1.02,s1:1.14,x1:'-2%',y1:'1%'}],
+ ['180106',null,'Layout completo','galeria de expositores no fundo, atendimento no centro',{s0:1.12,s1:1.0,ox:'40%',oy:'40%'}],
+ ['175527',14,'Parede institucional','a marca Mundial recebe o cliente',{s0:1.0,s1:1.12,ox:'20%',oy:'40%'}],
+ ['175553',9,'Salão de vendas','expositor Verniz em primeiro plano',{s0:1.12,s1:1.02,x0:'2%'}],
+ ['175614',1,'Lounge e atendimento','Painel Cores e mesas de atendimento',{s0:1.0,s1:1.12,ox:'25%',oy:'45%'}],
+ ['175724',1,'Painel Cores','peças de cor sobrepostas',{s0:1.0,s1:1.1,ox:'50%',oy:'35%'}],
+ ['175708',2,'Expositor Mactra','da fundação ao acabamento',{s0:1.0,s1:1.12,ox:'75%',oy:'50%'}],
+ ['175745',2,'Mactra · detalhe','amostras e QR code',{s0:1.12,s1:1.0,ox:'45%',oy:'40%'}],
+ ['175448',3,'Galeria de expositores','Arco-Íris e Luz & Cor',{s0:1.0,s1:1.1,x1:'-2%'}],
+ ['175806',3,'Arco-Íris','pórtico da Cor do Ano',{s0:1.0,s1:1.14,ox:'45%',oy:'50%'}],
+ ['175829',4,'Luz & Cor','nichos de cor iluminados',{s0:1.12,s1:1.0,ox:'50%',oy:'60%'}],
+ ['175651',8,'Banco Coralit','assento e mostruário',{s0:1.0,s1:1.12,ox:'35%',oy:'75%'}],
+ ['175943',8,'Banco Coralit','ao lado do Mactra',{s0:1.1,s1:1.0,ox:'40%',oy:'70%'}],
+ ['175635',7,'Mesas de atendimento','eixo central até as gôndolas',{s0:1.0,s1:1.1,ox:'60%',oy:'50%'}],
+ ['175845',5,'Painel Efeitos','amostras de grande formato',{s0:1.0,s1:1.1,ox:'50%',oy:'45%'}],
+ ['175911',9,'Expositor Verniz','esmaltes, vernizes e protetores',{s0:1.1,s1:1.0,ox:'50%',oy:'55%'}],
+ ['175509',5,'Circulação lateral','Efeitos e gôndolas de estoque',{s0:1.0,s1:1.12,ox:'55%',oy:'50%'}]
+];
+const OBJ = ITEMS.filter(i=>i.obj);
+const $ = s => document.querySelector(s);
+const f2 = n => String(n).padStart(2,'0');
+
+/* ---------- abas ---------- */
+const VIEWS=['planta','passeio','galeria'];
+function show(v,push){
+  if(!VIEWS.includes(v)) v='planta';
+  VIEWS.forEach(k=>{$('#v-'+k).hidden = k!==v; $('#t-'+k).setAttribute('aria-selected',k===v)});
+  if(v==='passeio') tour.start(); else tour.stop();
+  if(push){ try{history.replaceState(null,'','#'+v)}catch(e){} }
+}
+document.querySelectorAll('nav.tabs button').forEach(b=>b.onclick=()=>show(b.dataset.v,true));
+
+/* ---------- planta ---------- */
+const plan=$('#plan'), legend=$('#legend'), ficha=$('#ficha');
+ITEMS.forEach(it=>{
+  const h=document.createElement('button'); h.className='hs'+(it.sup?' sup':''); h.textContent=it.n;
+  h.style.left=it.x+'%'; h.style.top=it.y+'%'; h.setAttribute('aria-label',it.n+' · '+it.t); h.dataset.n=it.n;
+  h.onclick=()=>select(it.n); plan.appendChild(h);
+  const l=document.createElement('button'); l.className=it.sup?'sup':''; l.dataset.n=it.n;
+  l.innerHTML='<b>'+it.n+'</b>'+it.t; l.onclick=()=>select(it.n,true); legend.appendChild(l);
+});
+function select(n,scroll){
+  const it=ITEMS.find(i=>i.n===n);
+  document.querySelectorAll('.hs,.legend button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.n===n));
+  const th=it.img.map((k,i)=>`<button data-k="${k}" aria-label="Ampliar ${R[k]}"><img src="img/${k}.jpg" alt="" loading="lazy"></button>`).join('');
+  const tIdx=TOUR.findIndex(t=>t[1]===n);
+  ficha.innerHTML=`<div class="fh"><span class="n">${f2(n)}</span><h2>${it.t}<small>${it.s}</small></h2></div>`+
+    (it.obj?`<div class="obj"><img src="img/obj${f2(it.obj)}.jpg" alt="${it.t}, modelo isolado"></div>`:'')+
+    `<div class="body"><p>${it.d}</p>`+
+    (it.img.length?`<div class="thumbs">${th}</div>`:`<p class="nores">Ambiente de apoio, sem perspectiva nesta versão.</p>`)+
+    (tIdx>=0?`<button class="btn" id="go-tour">Ver no passeio ›</button>`:'')+`</div>`;
+  ficha.querySelectorAll('.thumbs button').forEach(b=>b.onclick=()=>{const list=it.img.map(k=>({src:'img/'+k+'.jpg',cap:R[k]}));lb.open(list,it.img.indexOf(b.dataset.k))});
+  const g=$('#go-tour'); if(g) g.onclick=()=>{show('passeio',true);tour.go(tIdx)};
+  if(scroll && window.innerWidth<=980) ficha.scrollIntoView({behavior:'smooth',block:'start'});
+}
+select(3);
+
+/* ---------- passeio ---------- */
+const tour=(()=>{
+  const stage=$('#stage'),prog=$('#prog'),cap=$('#cap'),strip=$('#strip');
+  const DUR=7000; let i=0,timer=null,playing=true,running=false;
+  const slides=TOUR.map((t,k)=>{
+    const d=document.createElement('div'); d.className='slide';
+    const o=t[4]; const img=new Image(); img.alt=t[2]; img.src='img/'+t[0]+'.jpg'; if(k>1) img.loading='lazy';
+    for(const [a,v] of Object.entries(o)) img.style.setProperty('--'+a, typeof v==='number'?v:v);
+    img.style.setProperty('--dur',(DUR/1000+1.2)+'s');
+    d.appendChild(img); stage.insertBefore(d,prog);
+    const p=document.createElement('i'); p.innerHTML='<b></b>'; prog.appendChild(p);
+    const s=document.createElement('button'); s.innerHTML=`<img src="img/${t[0]}.jpg" alt="" loading="lazy">`;
+    s.setAttribute('aria-label',(k+1)+'. '+t[2]); s.onclick=()=>go(k); strip.appendChild(s);
+    return d;
+  });
+  stage.style.setProperty('--dur',DUR/1000+'s');
+  function render(){
+    slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+    [...prog.children].forEach((p,k)=>{p.className=k<i?'done':(k===i?'cur':'');});
+    const cur=prog.children[i]; cur.className=''; void cur.offsetWidth; cur.className='cur';
+    const img=slides[i].firstChild; img.style.animation='none'; void img.offsetWidth; img.style.animation='';
+    const t=TOUR[i];
+    cap.innerHTML=`<div class="num">${t[1]?f2(t[1]):'·'}</div><h3>${t[2]}</h3><p>${t[3]}</p>`;
+    [...strip.children].forEach((b,k)=>b.setAttribute('aria-current',k===i));
+    const sb=strip.children[i]; if(sb && running) strip.scrollTo({left:sb.offsetLeft-strip.clientWidth/2+sb.clientWidth/2,behavior:'smooth'});
+  }
+  function arm(){clearTimeout(timer); if(playing&&running) timer=setTimeout(()=>go(i+1),DUR);}
+  function go(k){i=(k+slides.length)%slides.length; render(); arm();}
+  function setPlay(p){playing=p; stage.classList.toggle('paused',!p);
+    $('#i-play').innerHTML=p?'<path d="M7 5h4v14H7zm6 0h4v14h-4z"/>':'<path d="M8 5v14l11-7z"/>';
+    $('#b-play').setAttribute('aria-label',p?'Pausar':'Reproduzir'); arm();}
+  $('#b-prev').onclick=()=>go(i-1); $('#b-next').onclick=()=>go(i+1); $('#b-play').onclick=()=>setPlay(!playing);
+  $('#b-fs').onclick=()=>{try{ if(document.fullscreenElement) document.exitFullscreen(); else stage.requestFullscreen().catch(()=>{}); }catch(e){}};
+  document.addEventListener('keydown',e=>{ if($('#v-passeio').hidden||!$('#lb').hidden) return;
+    if(e.key==='ArrowRight') go(i+1); else if(e.key==='ArrowLeft') go(i-1); else if(e.key===' '&&document.activeElement===stage){e.preventDefault();setPlay(!playing);} });
+  let sx=null; stage.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  stage.addEventListener('touchend',e=>{ if(sx===null) return; const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) go(i+(dx<0?1:-1)); sx=null; });
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) playing=false, stage.classList.add('paused');
+  render();
+  return {start(){running=true; render(); setPlay(playing);}, stop(){running=false; clearTimeout(timer);}, go};
+})();
+
+/* ---------- galeria + lightbox ---------- */
+const lb=(()=>{
+  let list=[],k=0; const box=$('#lb');
+  function draw(){ $('#lb-img').src=list[k].src; $('#lb-img').alt=list[k].cap; $('#lb-cap').textContent=(k+1)+' / '+list.length+'  ·  '+list[k].cap; }
+  function open(l,i){list=l;k=Math.max(0,i);draw();box.hidden=false;tour.stop();$('#lb-x').focus();}
+  function close(){box.hidden=true; if(!$('#v-passeio').hidden) tour.start();}
+  $('#lb-x').onclick=close; $('#lb-p').onclick=()=>{k=(k-1+list.length)%list.length;draw()}; $('#lb-n').onclick=()=>{k=(k+1)%list.length;draw()};
+  box.addEventListener('click',e=>{if(e.target===box)close()});
+  document.addEventListener('keydown',e=>{ if(box.hidden) return; if(e.key==='Escape')close(); if(e.key==='ArrowRight')$('#lb-n').click(); if(e.key==='ArrowLeft')$('#lb-p').click(); });
+  return {open};
+})();
+const AMB=TOUR.map(t=>({src:'img/'+t[0]+'.jpg',cap:R[t[0]]}));
+AMB.forEach((a,k)=>{const b=document.createElement('button');b.innerHTML=`<img src="${a.src}" alt="${a.cap}" loading="lazy"><span>${a.cap}</span>`;b.onclick=()=>lb.open(AMB,k);$('#gal-amb').appendChild(b);});
+const OB=OBJ.map(o=>({src:'img/obj'+f2(o.obj)+'.jpg',cap:f2(o.n)+' · '+o.t}));
+OB.forEach((a,k)=>{const b=document.createElement('button');b.innerHTML=`<img src="${a.src}" alt="${a.cap}" loading="lazy"><span>${a.cap}</span>`;b.onclick=()=>lb.open(OB,k);$('#gal-obj').appendChild(b);});
+
+/* ---------- malha de pixels do timbrado ---------- */
+(function(){
+  const svg=$('#pix'); const W=Math.max(320,Math.round(svg.getBoundingClientRect().width)),H=28,C=10; let seed=7; const r=()=>(seed=(seed*16807)%2147483647)/2147483647;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`); let s='';
+  const x0=Math.round(W*(window.innerWidth<=620?0:.55)); for(let x=x0;x<W;x+=C){ for(let row=0;row<3;row++){ const dens=[.75,.45,.22][row]*(x<x0+40?.5:1);
+    if(r()<dens) s+=`<rect x="${x+.6}" y="${H-(row+1)*C+.6}" width="${C-1.2}" height="${C-1.2}" fill="#4CBABF"/>`; } }
+  svg.innerHTML=s;
+})();
+
+show((location.hash||'#planta').slice(1));
+</script>
